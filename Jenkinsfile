@@ -124,7 +124,7 @@ pipeline {
                     echo 'Running Push Docker Image'
                 }
             }
-        }     
+        }
         stage('Canary') {
             when {
                 branch 'canary'
