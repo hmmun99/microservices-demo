@@ -7,7 +7,7 @@ labels:
   jenkins/label: "jenkins-jenkins-agent"
 spec:
   securityContext:
-    fsGroup: 1950 # Group ID of docker group on k8s nodes.
+    fsGroup: 1950    # Group ID of docker group on k8s nodes.
   serviceAccountName: jenkins
   containers:
   - name: topgun
@@ -124,7 +124,16 @@ pipeline {
                     echo 'Running Push Docker Image'
                 }
             }
-        }                
+        }     
+        stage('Canary') {
+            when {
+                branch 'master'
+            }
+           steps {
+//               input 'Deploy to Production ??'
+//               milestone(1)
+           }          
+        }
         stage('DeployToProduction') {
             when {
                 branch 'master'
