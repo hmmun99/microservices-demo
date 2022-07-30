@@ -154,9 +154,10 @@ pipeline {
                            ./kubectl patch deployment adservice -n default -p \
                            '{"spec":{"template":{"spec":{"containers":[{"name":"server","image":"${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"}]}}}}'
                            """
-                    }
-                }
-            }
-        }
-    }
+                       }
+                   }
+               }
+           }
+       }
+   }
 }
