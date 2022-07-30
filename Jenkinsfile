@@ -130,7 +130,7 @@ pipeline {
                 branch 'canary'
             }
            steps {
-//               withKubeConfig([credentialsId: 'kubeconfig']) {
+               withKubeConfig([credentialsId: 'kubeconfig']) {
                     container('topgun') {
                         sh 'curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"'
                         sh 'chmod u+x ./kubectl'
@@ -138,7 +138,7 @@ pipeline {
                            ./kubectl patch deployment adservice -n canary -p \
                            '{"spec":{"template":{"spec":{"containers":[{"name":"service","image":"${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"}]}}}}'
                            """
-//               milestone(1)
+               milestone(1)
            }          
         }
         stage('DeployToProduction') {
