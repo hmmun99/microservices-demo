@@ -174,12 +174,12 @@ public final class AdService {
     Ad hairdryer =
         Ad.newBuilder()
             .setRedirectUrl("/product/2ZYFJ3GM2N")
-            .setText("Hairdryer for sale. 50% off.")
+            .setText("Hairdryer for sale. 100% off.")
             .build();
     Ad tankTop =
         Ad.newBuilder()
             .setRedirectUrl("/product/66VCHSJNUP")
-            .setText("Tank top for sale. 20% off.")
+            .setText("Tank top for sale. 100% off.")
             .build();
     Ad candleHolder =
         Ad.newBuilder()
