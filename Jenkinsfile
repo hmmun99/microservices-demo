@@ -139,7 +139,8 @@ pipeline {
                            '{"spec":{"template":{"spec":{"containers":[{"name":"server","image":"${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"}]}}}}'
                            """
 //               milestone(1)
-           }          
+              }          
+           }
         }
         stage('DeployToProduction') {
             when {
