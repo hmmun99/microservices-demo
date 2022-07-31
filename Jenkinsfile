@@ -57,6 +57,11 @@ pipeline {
         DOCKER_IMAGE_NAME = "hemyjoa/shop"
     }
     stages {
+      stage('checkout'){
+            steps{
+                git branch: 'master', url: 'https://github.com/hmmun99/microservices-demo.git'
+            }
+        }
         stage('Unit Test') {
             when {
                 branch 'canary'
