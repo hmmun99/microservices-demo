@@ -144,7 +144,7 @@ pipeline {
         }
         stage('DeployToProduction') {
             when {
-                branch 'master'
+                branch 'main'
             }
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig']) {
