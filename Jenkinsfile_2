@@ -59,7 +59,7 @@ pipeline {
     stages {
         stage('Unit Test') {
             when {
-                branch 'master'
+                branch 'canary'
             }
             steps {
                 container('golang') {
