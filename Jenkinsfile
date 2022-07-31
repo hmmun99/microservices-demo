@@ -59,7 +59,7 @@ pipeline {
     stages {
         stage('Unit Test') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {
                 container('golang') {
@@ -76,7 +76,7 @@ pipeline {
         }
         stage('Build') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {
                 container('golang') {
@@ -94,13 +94,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {
                 container('topgun') {
                     sh 'cp /home/jenkins/agent/app .'
                     script {
-                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/frontend/")
+                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/adservice/")
                         app.inside {
                             sh 'echo Hello, World!123'
                         }
@@ -111,7 +111,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {     
                 container('topgun') {
@@ -125,7 +125,23 @@ pipeline {
                 }
             }
         }     
-      
+        stage('Canary') {
+            when {
+                branch 'canary'
+            }
+           steps {
+//               input withKubeConfig([credentialsId: 'kubeconfig']) {
+                    container('topgun') {
+                        sh 'curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"'
+                        sh 'chmod u+x ./kubectl'
+                        sh """
+                           ./kubectl patch deployment frontend -n canary -p \
+                           '{"spec":{"template":{"spec":{"containers":[{"name":"server","image":"${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"}]}}}}'
+                           """
+//               milestone(1)
+              }          
+           }
+        }
         stage('DeployToProduction') {
             when {
                 branch 'main'
@@ -139,9 +155,9 @@ pipeline {
                            ./kubectl patch deployment frontend -n default -p \
                            '{"spec":{"template":{"spec":{"containers":[{"name":"server","image":"${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"}]}}}}'
                            """
-                    }
-                }
-            }
-        }
-    }
-}
+                       }
+                   }
+               }
+           }
+       }
+   }
