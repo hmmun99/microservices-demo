@@ -100,7 +100,7 @@ pipeline {
                 container('topgun') {
                     sh 'cp /home/jenkins/agent/app .'
                     script {
-                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/adservice")
+                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/frontend/")
                         app.inside {
                             sh 'echo Hello, World!123'
                         }
