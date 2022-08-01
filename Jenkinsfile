@@ -57,45 +57,11 @@ pipeline {
         DOCKER_IMAGE_NAME = "hemyjoa/shop"
     }
     stages {
-      stage('checkout'){
+        stage('checkout'){
             steps{
                 git branch: 'main', url: 'https://github.com/hmmun99/microservices-demo.git'
             }
-        }
-        stage('Unit Test') {
-            when {
-                branch 'main'
-            }
-            steps {
-                container('golang') {
-                  sh """
-                    echo 'Running build automation'
-                    cd src
-                    ln -s `pwd` /go/src/sample-app
-                    cd /go/src/sample-app
-                    go get cloud.google.com/go/compute/metadata
-                    go test
-                  """
-                }
-            }
-        }
-        stage('Build') {
-            when {
-                branch 'main'
-            }
-            steps {
-                container('golang') {
-                  sh """
-                    echo 'Running build automation'
-                    cd src
-                    ln -s `pwd` /go/src/app
-                    cd /go/src/app
-                    go get cloud.google.com/go/compute/metadata
-                    go build
-                    cp /go/src/app/app /home/jenkins/agent                    
-                  """
-                }
-            }
+       
         }
         stage('Build Docker Image') {
             when {
@@ -105,7 +71,7 @@ pipeline {
                 container('topgun') {
                     sh 'cp /home/jenkins/agent/app .'
                     script {
-                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/adservice/")
+                        app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/frontend/")
                         app.inside {
                             sh 'echo Hello, World!123'
                         }
