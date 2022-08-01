@@ -59,7 +59,7 @@ pipeline {
     stages {
       stage('checkout'){
             steps{
-                git branch: 'master', url: 'https://github.com/hmmun99/microservices-demo.git'
+                git branch: 'main', url: 'https://github.com/hmmun99/microservices-demo.git'
             }
         }
         stage('Unit Test') {
