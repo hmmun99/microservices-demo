@@ -64,7 +64,7 @@ pipeline {
         }
         stage('Unit Test') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {
                 container('golang') {
@@ -81,7 +81,7 @@ pipeline {
         }
         stage('Build') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {
                 container('golang') {
@@ -99,7 +99,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {
                 container('topgun') {
@@ -116,7 +116,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {     
                 container('topgun') {
