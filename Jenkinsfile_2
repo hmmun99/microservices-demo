@@ -57,48 +57,19 @@ pipeline {
         DOCKER_IMAGE_NAME = "hemyjoa/shop2"
     }
     stages {
-        stage('Unit Test') {
-            when {
-                branch 'canary'
+        stage('checkout'){
+            steps{
+                git branch: 'main', url: 'https://github.com/hmmun99/microservices-demo.git'
             }
-            steps {
-                container('golang') {
-                  sh """
-                    echo 'Running build automation'
-                    cd src
-                    ln -s `pwd` /go/src/sample-app
-                    cd /go/src/sample-app
-                    go get cloud.google.com/go/compute/metadata
-                    go test
-                  """
-                }
-            }
-        }
-        stage('Build') {
-            when {
-                branch 'canary'
-            }
-            steps {
-                container('golang') {
-                  sh """
-                    echo 'Running build automation'
-                    cd src
-                    ln -s `pwd` /go/src/app
-                    cd /go/src/app
-                    go get cloud.google.com/go/compute/metadata
-                    go build
-                    cp /go/src/app/app /home/jenkins/agent                    
-                  """
-                }
-            }
+       
         }
         stage('Build Docker Image') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {
                 container('topgun') {
-                    sh 'cp /home/jenkins/agent/app .'
+                    sh ''
                     script {
                         app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/adservice/")
                         app.inside {
@@ -111,7 +82,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'canary'
+                branch 'main'
             }
             steps {     
                 container('topgun') {
@@ -130,7 +101,7 @@ pipeline {
                 branch 'canary'
             }
            steps {
-//               withKubeConfig([credentialsId: 'kubeconfig']) {
+//                withKubeConfig([credentialsId: 'kubeconfig']) {
                     container('topgun') {
                         sh 'curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"'
                         sh 'chmod u+x ./kubectl'
