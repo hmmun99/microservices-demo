@@ -69,7 +69,7 @@ pipeline {
             }
             steps {
                 container('topgun') {
-                    sh 'cp /home/jenkins/agent/app .'
+                    sh ''
                     script {
                         app = docker.build(DOCKER_IMAGE_NAME,"---network host ./src/frontend/")
                         app.inside {
