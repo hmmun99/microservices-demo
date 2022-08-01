@@ -59,13 +59,13 @@ pipeline {
     stages {
         stage('checkout'){
             steps{
-                git branch: 'main', url: 'https://github.com/hmmun99/microservices-demo.git'
+                git branch: 'canary', url: 'https://github.com/hmmun99/microservices-demo.git'
             }
        
         }
         stage('Build Docker Image') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {
                 container('topgun') {
@@ -82,7 +82,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'main'
+                branch 'canary'
             }
             steps {     
                 container('topgun') {
