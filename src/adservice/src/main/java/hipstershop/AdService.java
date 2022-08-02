@@ -179,7 +179,7 @@ public final class AdService {
     Ad tankTop =
         Ad.newBuilder()
             .setRedirectUrl("/product/66VCHSJNUP")
-            .setText("Hello, world!!! Tank top for sale. 100% off.")
+            .setText("Hello, world!!! Tank top for sale. 200% off.")
             .build();
     Ad candleHolder =
         Ad.newBuilder()
