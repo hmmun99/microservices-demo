@@ -38,8 +38,7 @@ COPY ./static ./static
 # Default behavior - a failure prints a stack trace for the current goroutine.
 # See https://golang.org/pkg/runtime/
 
+ENV GOTRACEBACK=single
 
 EXPOSE 8080
 CMD ["/src/server"]
-
-ENV GOTRACEBACK=single
