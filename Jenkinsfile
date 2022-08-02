@@ -54,7 +54,7 @@ pipeline {
         }
     }
     environment {
-        DOCKER_IMAGE_NAME = "hemyjoa/shop"
+        DOCKER_IMAGE_NAME = "hmmun99/shop"
     }
     stages {
         stage('checkout'){
@@ -87,7 +87,7 @@ pipeline {
             steps {     
                 container('topgun') {
                     script {
-                        docker.withRegistry('https://registry.hub.docker.com', 'hemyjoa') {
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker') {
                             app.push("${env.BUILD_NUMBER}")
                             app.push("latest")
                         }
