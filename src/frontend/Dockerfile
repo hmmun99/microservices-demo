@@ -37,7 +37,9 @@ COPY ./static ./static
 # Definition of this variable is used by 'skaffold debug' to identify a golang binary.
 # Default behavior - a failure prints a stack trace for the current goroutine.
 # See https://golang.org/pkg/runtime/
-ENV GOTRACEBACK=single
+
 
 EXPOSE 8080
 CMD ["/src/server"]
+
+ENV GOTRACEBACK=single
