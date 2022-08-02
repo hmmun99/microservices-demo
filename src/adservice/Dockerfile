@@ -27,6 +27,9 @@ RUN ./gradlew installDist
 
 FROM openjdk:8-slim
 
+EXPOSE 9555
+CMD ["/app/build/install/hipstershop/bin/AdService"]
+
 # Download Stackdriver Profiler Java agent
 RUN apt-get -y update && apt-get install -qqy \
     wget \
@@ -43,5 +46,3 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
 WORKDIR /app
 COPY --from=builder /app .
 
-EXPOSE 9555
-CMD ["/app/build/install/hipstershop/bin/AdService"]
