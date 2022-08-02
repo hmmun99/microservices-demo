@@ -54,7 +54,7 @@ pipeline {
         }
     }
     environment {
-        DOCKER_IMAGE_NAME = "hmmun99/shop"
+        DOCKER_IMAGE_NAME = "hmmun99/frontend"
     }
     stages {
         stage('checkout'){
